@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Now — TLG Robotics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:#D42B2B;--red-dark:#9B1919;
+    --blue:#1A3A8F;--blue-bright:#2952CC;
+    --gold:#C8A84B;--gold-lt:#E0C870;
+    --dark:#06080F;--dark-2:#0C1020;--dark-3:#111828;--dark-4:#182038;
+    --text:#FFFFFF;--text-dim:#C8D4F0;
+    --border:rgba(255,255,255,0.08);
+    --border-red:rgba(212,43,43,0.4);--border-gold:rgba(200,168,75,0.35);
+    --green:#22c55e;--green-bg:rgba(34,197,94,0.1);--green-border:rgba(34,197,94,0.35);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--dark);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:500;line-height:1.6;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 10% 15%,rgba(212,43,43,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 90% 85%,rgba(41,82,204,0.09) 0%,transparent 60%),repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.012) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.012) 80px);pointer-events:none;z-index:0;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,8,15,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;text-decoration:none;display:flex;flex-direction:column;line-height:1.1;}
+  .nav-logo .r{color:var(--red);font-size:11px;letter-spacing:4px;}
+  .nav-logo .g{color:var(--gold);}
+  .nav-links{display:flex;gap:20px;list-style:none;align-items:center;}
+  .nav-links a{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{background:var(--red);color:#fff !important;padding:8px 16px;border-radius:2px;}
+  .nav-gold{background:var(--gold);color:#fff !important;padding:8px 16px;border-radius:2px;}
+  @media(max-width:900px){.nav-links{display:none;}nav{padding:0 20px;}}
+
+  /* IMAGES */
+  .full-img-wrap{width:100%;overflow:hidden;line-height:0;position:relative;}
+  .full-img-wrap img{width:100%;display:block;object-fit:contain;}
+  .full-img-wrap .fi-overlay{position:absolute;inset:0;background:linear-gradient(180deg,var(--dark) 0%,transparent 10%,transparent 90%,var(--dark) 100%);pointer-events:none;}
+  .full-img-wrap .fi-label{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,3vw,36px);letter-spacing:8px;color:rgba(255,255,255,0.75);text-shadow:0 2px 20px rgba(0,0,0,0.9);}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-red),rgba(41,82,204,0.4),transparent);}
+
+  /* SHARED */
+  section{position:relative;z-index:1;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+  /* HERO */
+  .hero{padding:88px 0 60px;text-align:center;background:var(--dark-2);border-bottom:1px solid var(--border);}
+  .hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(212,43,43,0.12);border:1px solid var(--border-red);padding:6px 20px;border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--red);margin-bottom:22px;}
+  .hero-badge::before{content:'●';font-size:8px;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,9vw,96px);letter-spacing:5px;line-height:0.95;margin-bottom:14px;}
+  .hero h1 .w1{color:var(--text);}
+  .hero h1 .w2{color:var(--gold);}
+  .hero-sub{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:clamp(13px,2vw,18px);letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);}
+
+  /* PRODUCT CARDS */
+  .products-section{padding:72px 0 0;}
+  .product-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:3px;margin-top:36px;}
+  .product-card{background:var(--dark-3);border:1px solid var(--border);padding:32px 28px;text-align:center;position:relative;overflow:hidden;transition:all .3s;}
+  .product-card:hover{background:var(--dark-4);}
+  .product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red),var(--blue-bright));}
+  .product-card.bundle-card::before{background:linear-gradient(90deg,var(--gold),var(--red),var(--blue-bright));}
+  .pc-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px;}
+  .pc-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,42px);letter-spacing:4px;color:var(--text);margin-bottom:6px;line-height:1;}
+  .pc-price{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:3px;color:var(--red);line-height:1;margin-bottom:18px;}
+  .pc-price.bundle-price{color:var(--gold);}
+  .pc-desc{font-size:14px;color:var(--text-dim);line-height:1.65;margin-bottom:24px;}
+  .pc-btn{display:block;width:100%;background:var(--red);color:#fff;border:2px solid var(--red);font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;padding:14px 0;border-radius:2px;text-align:center;cursor:pointer;transition:all .25s;}
+  .pc-btn:hover{background:transparent;color:var(--red);}
+  .pc-btn.bundle-btn{background:var(--gold);border-color:var(--gold);}
+  .pc-btn.bundle-btn:hover{background:transparent;color:var(--gold);}
+
+  /* NOTICE BOX */
+  .notice-box{background:rgba(200,168,75,0.07);border:1px solid var(--border-gold);border-left:4px solid var(--gold);padding:18px 24px;border-radius:0 4px 4px 0;margin:32px 0 0;}
+  .notice-box .nb-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+  .notice-box p{font-size:15px;color:rgba(255,220,120,0.82);line-height:1.7;}
+
+  /* MODAL OVERLAY */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;overflow-y:auto;padding:20px;}
+  .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+  .modal-box{background:var(--dark-2);border:1px solid var(--border);border-radius:6px;width:100%;max-width:600px;overflow:hidden;position:relative;margin:auto;}
+  .modal-header{background:var(--dark-3);padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .modal-header h3{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;color:var(--text);}
+  .modal-header .selected-robot{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);display:block;margin-top:3px;}
+  .modal-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:24px;cursor:pointer;padding:4px 10px;transition:color .2s;line-height:1;}
+  .modal-close:hover{color:#fff;}
+  .modal-body{padding:28px;}
+
+  /* FORM */
+  .form-section-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:16px;margin-top:24px;display:block;}
+  .form-section-label:first-child{margin-top:0;}
+  .field-group{margin-bottom:16px;}
+  .field-label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;}
+  .field-required{color:var(--red);}
+  input[type="text"],input[type="email"],input[type="tel"],textarea,select{width:100%;background:var(--dark-3);border:1px solid rgba(255,255,255,0.12);border-radius:3px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:500;padding:13px 16px;outline:none;transition:border-color .2s,background .2s;appearance:none;-webkit-appearance:none;}
+  input:focus,textarea:focus,select:focus{border-color:var(--gold);background:var(--dark-4);}
+  input::placeholder,textarea::placeholder{color:rgba(255,255,255,0.2);}
+  textarea{resize:vertical;min-height:90px;}
+  .addr-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .addr-row-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;}
+  @media(max-width:480px){.addr-row{grid-template-columns:1fr;}.addr-row-3{grid-template-columns:1fr;}}
+
+  /* ROBOT SELECTOR IN FORM */
+  .robot-options{display:flex;flex-direction:column;gap:10px;}
+  .robot-option{display:flex;align-items:center;gap:14px;background:var(--dark-3);border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:14px 16px;cursor:pointer;transition:all .2s;}
+  .robot-option:hover{border-color:var(--gold);}
+  .robot-option.selected{border-color:var(--gold);background:rgba(200,168,75,0.08);}
+  .robot-option input[type="radio"]{width:18px;height:18px;accent-color:var(--gold);flex-shrink:0;}
+  .ro-info{flex:1;}
+  .ro-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:1px;color:var(--text);}
+  .ro-price{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold);}
+
+  /* FORM ERROR */
+  .form-error{display:none;background:rgba(212,43,43,0.12);border:1px solid var(--border-red);border-left:3px solid var(--red);padding:12px 16px;border-radius:0 3px 3px 0;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:1px;color:#fca5a5;}
+  .form-error.show{display:block;}
+
+  /* SUBMIT BTN */
+  .btn-form-submit{display:block;width:100%;background:var(--red);color:#fff;border:2px solid var(--red);font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:5px;padding:18px 0;border-radius:3px;text-align:center;cursor:pointer;transition:all .25s;margin-top:8px;box-shadow:0 4px 20px rgba(212,43,43,0.3);}
+  .btn-form-submit:hover{background:var(--red-dark);box-shadow:0 8px 30px rgba(212,43,43,0.45);}
+
+  /* PAYMENT STEP */
+  .payment-step{display:none;padding:28px;}
+  .payment-step.show{display:block;}
+  .payment-box{background:var(--dark-3);border:1px solid var(--border-gold);border-radius:6px;padding:28px 24px;text-align:center;margin-bottom:20px;}
+  .payment-box .pb-icon{font-size:2.5rem;margin-bottom:12px;display:block;}
+  .payment-box h4{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:var(--text);margin-bottom:12px;}
+  .payment-box p{font-size:15px;color:var(--text-dim);line-height:1.78;margin-bottom:20px;}
+  .payment-box .order-summary{background:var(--dark-4);border:1px solid var(--border);border-radius:4px;padding:14px 18px;margin-bottom:20px;text-align:left;}
+  .payment-box .order-summary .os-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);display:block;margin-bottom:6px;}
+  .payment-box .order-summary .os-robot{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold);}
+  .payment-box .order-summary .os-price{font-size:15px;color:var(--text-dim);margin-top:4px;}
+  .btn-cashapp{display:block;width:100%;background:#00d632;color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;padding:18px 0;border-radius:3px;text-align:center;text-decoration:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(0,214,50,0.3);margin-bottom:14px;}
+  .btn-cashapp:hover{background:#00b82b;box-shadow:0 8px 30px rgba(0,214,50,0.5);}
+  .btn-sent{display:block;width:100%;background:transparent;color:var(--gold);border:2px solid var(--gold);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;padding:14px 0;border-radius:3px;text-align:center;cursor:pointer;transition:all .25s;}
+  .btn-sent:hover{background:var(--gold);color:#fff;}
+
+  /* CONFIRMATION STEP */
+  .confirmation-step{display:none;padding:36px 28px;text-align:center;}
+  .confirmation-step.show{display:block;}
+  .conf-check{font-size:3rem;margin-bottom:16px;display:block;}
+  .confirmation-step h4{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:4px;color:var(--green);margin-bottom:14px;}
+  .confirmation-step p{font-size:16px;color:var(--text-dim);line-height:1.82;max-width:440px;margin:0 auto 10px;}
+  .confirmation-step .conf-email{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:2px;color:var(--gold);margin-top:14px;display:block;}
+
+  /* HOW IT WORKS */
+  .how-section{padding:72px 0;}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:36px;}
+  @media(max-width:640px){.how-grid{grid-template-columns:1fr;}}
+  .how-card{background:var(--dark-3);border:1px solid var(--border);padding:28px 24px;text-align:center;}
+  .how-card::before{content:'';display:block;width:100%;height:3px;background:linear-gradient(90deg,var(--red),var(--blue-bright));margin-bottom:18px;}
+  .hc-num{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--gold);line-height:1;margin-bottom:8px;}
+  .hc-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);margin-bottom:10px;}
+  .hc-desc{font-size:14px;color:var(--text-dim);line-height:1.65;}
+
+  /* SECURITY NOTE */
+  .security-box{background:rgba(41,82,204,0.07);border:1px solid rgba(41,82,204,0.3);border-left:4px solid var(--blue-bright);padding:16px 22px;border-radius:0 4px 4px 0;margin:32px 0;}
+  .security-box .sb-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);display:block;margin-bottom:6px;}
+  .security-box p{font-size:14px;color:rgba(180,200,255,0.75);line-height:1.7;}
+
+  /* FOOTER */
+  footer{background:var(--dark-2);border-top:1px solid var(--border);padding:44px 28px 32px;text-align:center;}
+  .footer-wordmark{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:5px;margin-bottom:8px;}
+  .footer-wordmark .r{color:var(--red);}
+  .footer-wordmark .b{color:#4A7AFF;}
+  .footer-motto{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:15px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;}
+  .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;}
+  .footer-links a{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  .footer-links a:hover{color:var(--text);}
+  .footer-copy{font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:2px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://skynet420robotics.github.io/" class="nav-logo">
+    <span class="r">420 ROBOTICS</span>
+    <span class="g">TREASURY LEGACY GROUP</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Robots</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="https://skynet420robotics.github.io/420-Robotics-Donations/">Donate</a></li>
+    <li><a href="https://skynet420robotics.github.io/" class="nav-cta">Main Page</a></li>
+  </ul>
+</nav>
+
+<!-- TOP IMAGE -->
+<div class="full-img-wrap" style="margin-top:64px;">
+  <img src="image_1774596927503.jpeg" alt="TLG Robotics — Order Now"/>
+  <div class="fi-overlay"></div>
+  <div class="fi-label">TLG ROBOTICS — ORDER NOW</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge">TREASURY LEGACY GROUP — ROBOT ORDERS</div>
+    <h1><span class="w1">ORDER</span><br><span class="w2">YOUR ROBOT</span></h1>
+    <p class="hero-sub">TLG Ankle Biter™ &nbsp;•&nbsp; TLG Mini Tank™ &nbsp;•&nbsp; Bundle Deal</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="wrap">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:14px;padding-top:72px;">— Select Your Robot</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:4px;line-height:1;margin-bottom:20px;">Choose Your Unit</h2>
+
+    <div class="product-cards">
+
+      <div class="product-card">
+        <span class="pc-tag">Security Robot</span>
+        <div class="pc-name">ANKLE BITER™</div>
+        <div class="pc-price">$69</div>
+        <p class="pc-desc">Compact dual-lens security robot. AI human &amp; pet detection, auto-tracking, two-way audio, night vision. Perfect for apartments, desks, and shelves.</p>
+        <button class="pc-btn" onclick="openOrder('Ankle Biter™', '$69', 69)">ORDER NOW</button>
+      </div>
+
+      <div class="product-card">
+        <span class="pc-tag">Tank Robot</span>
+        <div class="pc-name">MINI TANK™</div>
+        <div class="pc-price">$69</div>
+        <p class="pc-desc">Tank-style mobile camera robot. Real-time video, all-terrain tracks, smartphone control. Built for home security, exploration, and pet monitoring.</p>
+        <button class="pc-btn" onclick="openOrder('Mini Tank™', '$69', 69)">ORDER NOW</button>
+      </div>
+
+      <div class="product-card bundle-card">
+        <span class="pc-tag">Best Value — Bundle</span>
+        <div class="pc-name">BOTH<br>ROBOTS</div>
+        <div class="pc-price bundle-price">$120</div>
+        <p class="pc-desc">Get both the TLG Ankle Biter™ and TLG Mini Tank™ together. Maximum coverage. Maximum value. Save $18 off individual pricing.</p>
+        <button class="pc-btn bundle-btn" onclick="openOrder('Bundle: Both Robots (Ankle Biter™ + Mini Tank™)', '$120', 120)">ORDER BUNDLE</button>
+      </div>
+
+    </div>
+
+    <div class="notice-box">
+      <span class="nb-tag">Pricing Notice</span>
+      <p>Prices listed are current estimates. All units tested before delivery. U.S.-based support on every order through 420 Robotics. Questions? Call or text <strong style="color:var(--gold);">415‑630‑5943</strong> — 24/7.</p>
+    </div>
+
+    <div class="security-box">
+      <span class="sb-tag">Security Note</span>
+      <p>We do <strong>not</strong> store any payment information. We do <strong>not</strong> auto-charge your account. Payment is sent manually by you via Cash App after submitting your order. Your financial information stays private at all times.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:14px;">— Order Process</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:4px;line-height:1;margin-bottom:6px;">How It Works</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="hc-num">01</div>
+        <div class="hc-title">Fill The Form</div>
+        <p class="hc-desc">Select your robot, enter your name, email, phone, and shipping address. Takes less than 2 minutes.</p>
+      </div>
+      <div class="how-card">
+        <div class="hc-num">02</div>
+        <div class="hc-title">Send Payment</div>
+        <p class="hc-desc">After submitting, send payment via Cash App to <strong style="color:var(--gold);">$420robotics</strong>. You control when you pay — we never auto-charge.</p>
+      </div>
+      <div class="how-card">
+        <div class="hc-num">03</div>
+        <div class="hc-title">Get Confirmed</div>
+        <p class="hc-desc">Once payment is received, you'll get a confirmation email within 24 hours from <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f2f9f5fdebf0f9ebecf1f6ffebeff7eaf3d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- POLICY SECTION -->
+<section style="padding:80px 0;position:relative;z-index:1;background:var(--dark-2);">
+  <div class="wrap">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:14px;">— Legal &amp; Product Information</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,5vw,52px);letter-spacing:4px;line-height:1;margin-bottom:32px;color:#fff;">AI Use Policy, Warranty,<br><span style="color:var(--gold);">Safety Notice &amp; Customer Agreement</span></h2>
+
+    <div style="background:rgba(212,43,43,0.07);border:1px solid var(--border-red);border-left:4px solid var(--red);padding:14px 22px;border-radius:0 4px 4px 0;margin-bottom:32px;">
+      <p style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;color:rgba(255,180,180,0.85);line-height:1.6;">420 ROBOTICS — AI USE POLICY, WARRANTY, SAFETY NOTICE, AND CUSTOMER AGREEMENT<br>Applies to: Ankle Biter™ and Mini Tank™</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">AI Systems Used</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics uses multiple AI systems to power, support, and improve the Ankle Biter™ and other robotics products. These systems include Claude, Microsoft Copilot, GPT‑5, Gemini, Grok, and Meta AI. All AIs used are on free plans unless a paid plan is recommended for advanced features. Customers are not required to purchase any AI subscription to use the robot. Paid plans may improve performance, but they are optional.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">420 Robotics uses multiple AIs because no single model is perfect. Each model has strengths and weaknesses. By combining them, we reduce bias, increase accuracy, and create a safer learning environment for new users. This is the first time large language models are being used in consumer robotics for the average person, and our goal is to make the experience simple, safe, and educational.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">About the Robot</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">The Ankle Biter™ and Mini Tank™ are designed as entry‑level AI robotics devices. They teach users how AI works, how robotics respond to commands, and how to safely interact with mobile AI systems. They are intentionally limited in power to prevent harm. The only real risk is privacy, which is the same risk you already have with your phone, laptop, smart TV, Ring doorbell, or any device with a camera or microphone.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">The robot uses an old phone or extra device, not your main phone, and connects to your home Wi‑Fi. No AI model runs directly on your personal phone unless you choose to install it.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Privacy Policy</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics does not collect personal data from your robot. All video, audio, and sensor data stays on your device or inside the apps you choose to install. You are responsible for your own privacy settings.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">If you already carry a phone with 3–6 cameras, you already have more exposure than this robot creates.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Laser Pointer &amp; Safety</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">The robot includes a built‑in red laser pointer. This laser is low‑power and safe for pets and children when used responsibly. It can be used for pet entertainment, cat chase games, dog training, or directing a dog toward a door or window during a potential threat.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">The robot cannot physically harm anyone. It cannot attack, restrain, or chase a person. It is a signaling and monitoring tool only. 420 Robotics is not responsible for injuries caused by pets reacting to the laser pointer. Customers must use the laser responsibly.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Limited Warranty</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics provides a limited warranty. If the robot malfunctions due to manufacturing defects, software issues, or AI errors, we will repair or replace it.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">If the robot is damaged due to misuse, neglect, water damage, being stepped on, being thrown, or being run over by a car, the customer is responsible for replacement parts. If we have spare parts available, we will send them at no cost. If we do not have spare parts, the customer must purchase replacements.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">We do not support intentional destruction for entertainment or online videos.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Learning &amp; Community</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics encourages learning and participation. Customers who show interest in robotics, AI, or troubleshooting may be invited to assist with testing, feedback, or community support. This is optional.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">Customers who do not want AI involvement can use the robot offline or with non‑AI modes. The robot can operate without AI using manual control and basic camera functions.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Limitations &amp; Disclaimer</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">The robot is not a replacement for home security systems, emergency services, or professional monitoring. It is a learning tool, a pet interaction device, and a basic mobile camera platform.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">420 Robotics and Treasury Legacy Group are not liable for misuse, unsafe operation, or damage caused by ignoring instructions. All AI systems used are third‑party services with their own terms and policies. Customers are responsible for reviewing those policies.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+        <div style="background:var(--dark-4);padding:14px 24px;border-bottom:1px solid var(--border);">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);">Support &amp; Our Mission</span>
+        </div>
+        <div style="padding:20px 24px;">
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics provides support for setup, troubleshooting, and repairs. If a robot breaks due to normal use, we will help fix it. If it is destroyed beyond repair, we will assist with replacement options.</p>
+          <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">Our mission is to help people learn robotics safely, understand AI without fear, and bring the next generation into the computer‑robotics age with confidence.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(200,168,75,0.07);border:1px solid var(--border-gold);border-left:4px solid var(--gold);padding:18px 24px;border-radius:0 4px 4px 0;">
+        <span style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px;">Customer Agreement</span>
+        <p style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;color:rgba(255,220,120,0.85);line-height:1.7;">By using the Ankle Biter™ or Mini Tank™, customers agree to operate the robot safely, maintain their own privacy settings, and understand the limitations of AI systems. 420 Robotics and Treasury Legacy Group are not liable for misuse, unsafe operation, or damage caused by ignoring instructions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="divider"></div>
+
+<!-- ── POLICY SECTION ── -->
+<section style="padding:80px 0;position:relative;z-index:1;background:var(--dark-2);">
+  <div class="wrap">
+    <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:10px;">— Official Policy<span style="flex:1;height:1px;background:var(--border-red);max-width:120px;display:inline-block;"></span></div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,52px);letter-spacing:4px;line-height:1;margin-bottom:28px;color:#fff;">AI Use Policy, Warranty,<br>Safety Notice &amp; Customer Agreement</h2>
+
+    <div style="background:rgba(200,168,75,0.07);border:1px solid var(--border-gold);border-left:4px solid var(--gold);padding:16px 22px;border-radius:0 4px 4px 0;margin-bottom:36px;">
+      <span style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;">Applies To</span>
+      <p style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;color:rgba(255,220,120,0.9);">TLG Ankle Biter™ &nbsp;&amp;&nbsp; TLG Mini Tank™ &nbsp;•&nbsp; 420 Robotics &nbsp;•&nbsp; Treasury Legacy Group</p>
+    </div>
+
+    <div id="policy-text" style="background:var(--dark-3);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">AI Systems Used</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics uses multiple AI systems to power, support, and improve the TLG Ankle Biter™, TLG Mini Tank™, and other robotics products. These systems include Claude, Microsoft Copilot, GPT‑5, Gemini, Grok, and Meta AI. All AIs used are on free plans unless a paid plan is recommended for advanced features. Customers are not required to purchase any AI subscription to use the robot. Paid plans may improve performance, but they are optional.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">420 Robotics uses multiple AIs because no single model is perfect. Each model has strengths and weaknesses. By combining them, we reduce bias, increase accuracy, and create a safer learning environment for new users. This is the first time large language models are being used in consumer robotics for the average person, and our goal is to make the experience simple, safe, and educational.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">About the TLG Ankle Biter™ &amp; TLG Mini Tank™</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">The TLG Ankle Biter™ and TLG Mini Tank™ are designed as entry‑level AI robotics devices. They teach users how AI works, how robotics respond to commands, and how to safely interact with mobile AI systems. Both are intentionally limited in power to prevent harm. The only real risk is privacy — which is the same risk you already have with your phone, laptop, smart TV, Ring doorbell, or any device with a camera or microphone.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">The robots use an old phone or extra device, not your main phone, and connect to your home Wi‑Fi. No AI model runs directly on your personal phone unless you choose to install it.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Privacy &amp; Data Collection</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">420 Robotics does not collect personal data from your robot. All video, audio, and sensor data stays on your device or inside the apps you choose to install. You are responsible for your own privacy settings. If you already carry a phone with 3–6 cameras, you already have more exposure than this robot creates.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Laser Pointer &amp; Safety</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">The robot includes a built‑in red laser pointer. This laser is low‑power and safe for pets and children when used responsibly. It can be used for pet entertainment, cat chase games, dog training, or directing a dog toward a door or window during a potential threat.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">The robot cannot physically harm anyone. It cannot attack, restrain, or chase a person. It is a signaling and monitoring tool only. 420 Robotics is not responsible for injuries caused by pets reacting to the laser pointer. Customers must use the laser responsibly.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Limited Warranty</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics provides a limited warranty. If the robot malfunctions due to manufacturing defects, software issues, or AI errors, we will repair or replace it.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">If the robot is damaged due to misuse, neglect, water damage, being stepped on, being thrown, or being run over by a car, the customer is responsible for replacement parts. If we have spare parts available, we will send them at no cost. If we do not have spare parts, the customer must purchase replacements.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">We do not support intentional destruction for entertainment or online videos.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Learning &amp; Participation</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">420 Robotics encourages learning and participation. Customers who show interest in robotics, AI, or troubleshooting may be invited to assist with testing, feedback, or community support. This is optional.</p>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">Customers who do not want AI involvement can use the robot offline or with non‑AI modes. The robot can operate without AI using manual control and basic camera functions.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Limitations &amp; Disclaimer</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">The robot is not a replacement for home security systems, emergency services, or professional monitoring. It is a learning tool, a pet interaction device, and a basic mobile camera platform. 420 Robotics and Treasury Legacy Group are not liable for misuse, unsafe operation, or damage caused by ignoring instructions. All AI systems used are third‑party services with their own terms and policies. Customers are responsible for reviewing those policies.</p>
+      </div>
+
+      <div class="policy-block" style="padding:28px 32px;border-bottom:1px solid var(--border);">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);margin-bottom:14px;">Support &amp; Repairs</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;">420 Robotics provides support for setup, troubleshooting, and repairs. If a robot breaks due to normal use, we will help fix it. If it is destroyed beyond repair, we will assist with replacement options. Our mission is to help people learn robotics safely, understand AI without fear, and bring the next generation into the computer‑robotics age with confidence.</p>
+      </div>
+
+      <div style="background:rgba(212,43,43,0.07);border-top:1px solid var(--border-red);padding:28px 32px;">
+        <h4 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--red);margin-bottom:14px;">Customer Agreement</h4>
+        <p style="font-size:15px;color:var(--text-dim);line-height:1.82;margin-bottom:12px;">By purchasing or using the TLG Ankle Biter™ or TLG Mini Tank™, customers agree to:</p>
+        <ul style="list-style:none;padding:0;margin-bottom:0;">
+          <li style="font-size:15px;color:var(--text-dim);padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--border);line-height:1.65;"><span style="position:absolute;left:0;color:var(--red);font-weight:700;">›</span>Operate the robot safely and responsibly</li>
+          <li style="font-size:15px;color:var(--text-dim);padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--border);line-height:1.65;"><span style="position:absolute;left:0;color:var(--red);font-weight:700;">›</span>Maintain their own privacy settings</li>
+          <li style="font-size:15px;color:var(--text-dim);padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--border);line-height:1.65;"><span style="position:absolute;left:0;color:var(--red);font-weight:700;">›</span>Understand the limitations of AI systems</li>
+          <li style="font-size:15px;color:var(--text-dim);padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--border);line-height:1.65;"><span style="position:absolute;left:0;color:var(--red);font-weight:700;">›</span>Review all third-party AI service terms and policies</li>
+          <li style="font-size:15px;color:var(--text-dim);padding:9px 0 9px 22px;position:relative;line-height:1.65;"><span style="position:absolute;left:0;color:var(--red);font-weight:700;">›</span>Accept that 420 Robotics and Treasury Legacy Group are not liable for misuse or unsafe operation</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wordmark"><span class="r">420</span> <span class="b">ROBOTICS</span></div>
+  <div class="footer-motto">Treasury Legacy Group · For God. For Country. For Humanity.</div>
+  <div class="footer-links">
+    <a href="https://skynet420robotics.github.io/">Main Page</a>
+    <a href="https://skynet420robotics.github.io/420-Robotics-EXExEX/">Robot Sales</a>
+    <a href="https://skynet420robotics.github.io/420-Robotics-Donations/">Donate</a>
+    <a href="/cdn-cgi/l/email-protection#aec2cbc9cfcdd7dadccbcfdddbdccbc9dcc1dbdeeec9c3cfc7c280cdc1c3">Contact Robert</a>
+    <a href="tel:4156305943">415‑630‑5943</a>
+  </div>
+  <div class="footer-copy">© 2025–2026 TREASURY LEGACY GROUP / 420 ROBOTICS — ALL RIGHTS RESERVED</div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- ORDER MODAL                               -->
+<!-- ══════════════════════════════════════════ -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal-box">
+
+    <!-- STEP 1: FORM -->
+    <div id="step-form">
+      <div class="modal-header">
+        <div>
+          <h3>ORDER FORM</h3>
+          <span class="selected-robot" id="modal-robot-label">Loading...</span>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-error" id="formError">Please complete all required fields before submitting.</div>
+
+        <form id="orderForm" onsubmit="handleSubmit(event)">
+
+          <!-- ROBOT SELECTION -->
+          <span class="form-section-label">Robot Selection</span>
+          <div class="robot-options" id="robotOptions">
+            <label class="robot-option" id="opt-anklebiter">
+              <input type="radio" name="robot" value="Ankle Biter™ — $69" data-price="69" onchange="selectRobot(this)"/>
+              <div class="ro-info">
+                <div class="ro-name">Ankle Biter™</div>
+              </div>
+              <div class="ro-price">$69</div>
+            </label>
+            <label class="robot-option" id="opt-minitank">
+              <input type="radio" name="robot" value="Mini Tank™ — $69" data-price="69" onchange="selectRobot(this)"/>
+              <div class="ro-info">
+                <div class="ro-name">Mini Tank™</div>
+              </div>
+              <div class="ro-price">$69</div>
+            </label>
+            <label class="robot-option" id="opt-bundle">
+              <input type="radio" name="robot" value="Bundle: Both Robots (Ankle Biter™ + Mini Tank™) — $120" data-price="120" onchange="selectRobot(this)"/>
+              <div class="ro-info">
+                <div class="ro-name">Bundle: Both Robots</div>
+              </div>
+              <div class="ro-price" style="color:var(--gold);">$120</div>
+            </label>
+          </div>
+
+          <!-- CONTACT INFO -->
+          <span class="form-section-label" style="margin-top:28px;">Customer Information</span>
+
+          <div class="field-group">
+            <label class="field-label" for="fname">Full Name <span class="field-required">*</span></label>
+            <input type="text" id="fname" name="full_name" placeholder="Enter your full name" required/>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="femail">Email Address <span class="field-required">*</span></label>
+            <input type="email" id="femail" name="email" placeholder="Enter your email address" required/>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="fphone">Phone Number <span class="field-required">*</span></label>
+            <input type="tel" id="fphone" name="phone" placeholder="Enter your phone number" required/>
+          </div>
+
+          <!-- SHIPPING -->
+          <span class="form-section-label" style="margin-top:28px;">Shipping Address</span>
+
+          <div class="field-group">
+            <label class="field-label" for="fstreet">Street Address <span class="field-required">*</span></label>
+            <input type="text" id="fstreet" name="street" placeholder="123 Main Street" required/>
+          </div>
+
+          <div class="addr-row">
+            <div class="field-group">
+              <label class="field-label" for="fcity">City <span class="field-required">*</span></label>
+              <input type="text" id="fcity" name="city" placeholder="City" required/>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="fstate">State <span class="field-required">*</span></label>
+              <input type="text" id="fstate" name="state" placeholder="TX" maxlength="2" required/>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="fzip">ZIP Code <span class="field-required">*</span></label>
+            <input type="text" id="fzip" name="zip" placeholder="ZIP Code" required/>
+          </div>
+
+          <!-- NOTES -->
+          <span class="form-section-label" style="margin-top:28px;">Optional Notes</span>
+          <div class="field-group">
+            <label class="field-label" for="fnotes">Special Instructions or Delivery Notes</label>
+            <textarea id="fnotes" name="notes" placeholder="Any special instructions or delivery notes?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-form-submit">SUBMIT ORDER</button>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- STEP 2: PAYMENT -->
+    <div id="step-payment" style="display:none;">
+      <div class="modal-header">
+        <div>
+          <h3>SEND PAYMENT</h3>
+          <span class="selected-robot">Step 2 of 3</span>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="payment-step show">
+        <div class="payment-box">
+          <span class="pb-icon">💳</span>
+          <h4>Complete Your Order</h4>
+          <div class="order-summary">
+            <span class="os-label">Your Order</span>
+            <div class="os-robot" id="payment-robot-name">Loading...</div>
+            <div class="os-price" id="payment-price">Loading...</div>
+          </div>
+          <p>To complete your order, please send payment to our official Cash App link below. Once payment is received, we will confirm your order within 24 hours.</p>
+          <a href="https://cash.app/$420robotics" target="_blank" rel="noopener noreferrer" class="btn-cashapp">💚 SEND PAYMENT VIA CASH APP</a>
+          <button class="btn-sent" onclick="showConfirmation()">I'VE SENT PAYMENT ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONFIRMATION -->
+    <div id="step-confirmation" style="display:none;">
+      <div class="modal-header">
+        <div>
+          <h3>ORDER SUBMITTED</h3>
+          <span class="selected-robot">Step 3 of 3 — Complete</span>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="confirmation-step show">
+        <span class="conf-check">✅</span>
+        <h4>THANK YOU!</h4>
+        <p>Your order has been submitted. Please allow up to 24 hours for confirmation and processing.</p>
+        <p>You will receive an email once your order is confirmed.</p>
+        <span class="conf-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee848f838b9d868f9d9a8780899d99819c85ae89838f8782c08d8183">[email&#160;protected]</a></span>
+        <p style="margin-top:20px;font-size:14px;color:rgba(255,255,255,0.35);">Questions? Call or text 415‑630‑5943 anytime.</p>
+        <button onclick="closeModal()" style="display:block;width:100%;background:var(--gold);color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;padding:14px 0;border-radius:3px;cursor:pointer;margin-top:24px;transition:all .25s;">CLOSE</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── STATE ──
+var selectedRobot = '';
+var selectedPrice = 0;
+
+// ── OPEN MODAL ──
+function openOrder(robotName, priceDisplay, priceNum) {
+  selectedRobot = robotName;
+  selectedPrice = priceNum;
+
+  // Reset to step 1
+  document.getElementById('step-form').style.display = 'block';
+  document.getElementById('step-payment').style.display = 'none';
+  document.getElementById('step-confirmation').style.display = 'none';
+  document.getElementById('formError').classList.remove('show');
+
+  // Set modal label
+  document.getElementById('modal-robot-label').textContent = robotName + ' — ' + priceDisplay;
+
+  // Pre-select correct radio
+  var radios = document.querySelectorAll('input[name="robot"]');
+  radios.forEach(function(r){ r.closest('.robot-option').classList.remove('selected'); });
+
+  if (robotName.indexOf('Ankle') !== -1) {
+    document.querySelector('#opt-anklebiter input').checked = true;
+    document.getElementById('opt-anklebiter').classList.add('selected');
+  } else if (robotName.indexOf('Mini Tank') !== -1) {
+    document.querySelector('#opt-minitank input').checked = true;
+    document.getElementById('opt-minitank').classList.add('selected');
+  } else {
+    document.querySelector('#opt-bundle input').checked = true;
+    document.getElementById('opt-bundle').classList.add('selected');
+  }
+
+  document.getElementById('orderModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('orderModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('orderModal').addEventListener('click', function(e){
+  if (e.target === this) closeModal();
+});
+
+// ── SELECT ROBOT IN FORM ──
+function selectRobot(radio) {
+  document.querySelectorAll('.robot-option').forEach(function(o){ o.classList.remove('selected'); });
+  radio.closest('.robot-option').classList.add('selected');
+  selectedRobot = radio.value.split(' — ')[0];
+  selectedPrice = parseInt(radio.dataset.price);
+}
+
+// ── FORM SUBMIT ──
+function handleSubmit(e) {
+  e.preventDefault();
+
+  // Validate robot selected
+  var robotSelected = document.querySelector('input[name="robot"]:checked');
+  if (!robotSelected) {
+    document.getElementById('formError').textContent = 'Please select a robot before submitting.';
+    document.getElementById('formError').classList.add('show');
+    return;
+  }
+
+  // Validate required fields
+  var required = ['fname','femail','fphone','fstreet','fcity','fstate','fzip'];
+  var valid = true;
+  required.forEach(function(id){
+    if (!document.getElementById(id).value.trim()) valid = false;
+  });
+
+  if (!valid) {
+    document.getElementById('formError').textContent = 'Please complete all required fields before submitting.';
+    document.getElementById('formError').classList.add('show');
+    return;
+  }
+
+  document.getElementById('formError').classList.remove('show');
+
+  // Build email data via Formspree or mailto fallback
+  var robotVal = robotSelected.value;
+  var name = document.getElementById('fname').value;
+  var email = document.getElementById('femail').value;
+  var phone = document.getElementById('fphone').value;
+  var street = document.getElementById('fstreet').value;
+  var city = document.getElementById('fcity').value;
+  var state = document.getElementById('fstate').value;
+  var zip = document.getElementById('fzip').value;
+  var notes = document.getElementById('fnotes').value;
+
+  var subject = 'New TLG Robotics Order — ' + robotVal;
+  var body = [
+    'ROBOT SELECTED: ' + robotVal,
+    '',
+    'CUSTOMER INFORMATION:',
+    'Name: ' + name,
+    'Email: ' + email,
+    'Phone: ' + phone,
+    '',
+    'SHIPPING ADDRESS:',
+    street,
+    city + ', ' + state + ' ' + zip,
+    '',
+    'NOTES: ' + (notes || 'None'),
+  ].join('\n');
+
+  // Send via mailto to jameshastingswork@gmail.com
+  var mailtoLink = 'mailto:jameshastingswork@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.open(mailtoLink, '_blank');
+
+  // Show payment step
+  document.getElementById('step-form').style.display = 'none';
+  document.getElementById('step-payment').style.display = 'block';
+  document.ge
